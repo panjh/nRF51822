@@ -44,7 +44,7 @@ public:
 
 
 private:
-    const static unsigned BLE_TOTAL_CHARACTERISTICS = 20;
+    const static unsigned BLE_TOTAL_CHARACTERISTICS = 30;
     const static unsigned BLE_TOTAL_DESCRIPTORS     = 8;
 
 private:
