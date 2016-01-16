@@ -291,7 +291,7 @@ ble_error_t nRF5xGattServer::write(Gap::Handle_t connectionHandle, GattAttribute
  */
 ble_error_t nRF5xGattServer::notify(GattAttribute::Handle_t attributeHandle, const uint8_t buffer[], uint16_t len)
 {
-    uint16_t gapConnectionHandle = nRF5xGap::getInstance().getConnectionHandle();
+    uint16_t gapConnectionHandle = ((nRF5xGap &)nRF5xn::Instance(BLE::DEFAULT_INSTANCE).getGap()).getConnectionHandle();
     ble_gatts_hvx_params_t hvx_params;
 
     hvx_params.handle = attributeHandle;
