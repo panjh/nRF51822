@@ -422,7 +422,8 @@ void nRF5xGattServer::hwCallback(ble_evt_t *p_ble_evt)
         }
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            sd_ble_gatts_sys_attr_set(gattsEventP->conn_handle, NULL, 0, 0);
+            sd_ble_gatts_sys_attr_set(gattsEventP->conn_handle, NULL, 0, BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
+            sd_ble_gatts_service_changed(gattsEventP->conn_handle, 0x000c, 0xffff); 
             return;
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
