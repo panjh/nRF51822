@@ -74,8 +74,11 @@ public:
         ble_error_t error = createWhitelistFromBondTable(whitelistFromBondTable);
         if (error != BLE_ERROR_NONE) {
             addresses.size = 0;
+            addresses.bonds = 0;
             return error;
         }
+
+        addresses.bonds = whitelistFromBondTable.irk_count;
 
         /* Put all the addresses in the structure */
         for (i = 0; i < whitelistFromBondTable.addr_count; ++i) {
