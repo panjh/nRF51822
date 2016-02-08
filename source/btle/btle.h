@@ -27,6 +27,7 @@ extern "C" {
 #include "ble.h"
 
 error_t     btle_init(void);
+error_t     btle_set_gatt_table_size(uint32_t size);
 
 #ifdef __cplusplus
 }

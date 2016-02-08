@@ -47,6 +47,7 @@ extern "C" void assert_nrf_callback(uint16_t line_num, const uint8_t *p_file_nam
 void            app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t *p_file_name);
 
 static void btle_handler(ble_evt_t *p_ble_evt);
+static uint32_t gatt_table_size = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
@@ -77,6 +78,18 @@ static uint32_t eventHandler()
     return NRF_SUCCESS;
 }
 
+error_t
+btle_set_gatt_table_size(uint32_t size)
+{
+    if (size >= BLE_GATTS_ATTR_TAB_SIZE_MIN)
+    {
+        gatt_table_size = size;
+        return ERROR_NONE;
+    }
+
+    return ERROR_INVALID_PARAM;
+}
+
 error_t btle_init(void)
 {
     nrf_clock_lfclksrc_t clockSource;
@@ -104,7 +117,8 @@ error_t btle_init(void)
     static const bool IS_SRVC_CHANGED_CHARACT_PRESENT = true;
     ble_enable_params_t enableParams = {
         .gatts_enable_params = {
-            .service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT
+            .service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT,
+            .attr_tab_size = gatt_table_size
         }
     };
     if (sd_ble_enable(&enableParams) != NRF_SUCCESS) {
