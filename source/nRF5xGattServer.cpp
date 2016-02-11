@@ -421,9 +421,13 @@ void nRF5xGattServer::hwCallback(ble_evt_t *p_ble_evt)
             return;
         }
 
-        case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            sd_ble_gatts_sys_attr_set(gattsEventP->conn_handle, NULL, 0, 0);
+        case BLE_GATTS_EVT_SYS_ATTR_MISSING: 
+        case BLE_GAP_EVT_CONN_SEC_UPDATE:
+        {
+            GattSysAttrMissingCallbackParams cbParams = {gattsEventP->conn_handle};
+            handleSysAttrMissingEvent(&cbParams);
             return;
+        }
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
             switch (gattsEventP->params.authorize_request.type) {
